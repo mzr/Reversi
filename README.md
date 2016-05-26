@@ -31,7 +31,11 @@ a simple game written in C with GTK+
       Jej instalacja:</br>
       sudo apt-get install libgtk-3-dev</br>
       Program kompilujemy następnie polecieniem:</br>
-      gcc main.c reversi.c pipes-lin.c -std=c99 `pkg-config --cflags --libs gtk+-3.0`</br>
+      gcc main.c reversi.c pipes-lin.c -std=c99 -o reversi `pkg-config --cflags --libs gtk+-3.0`</br>
+      </br>
+      Uruchamiamy w 2 osobnych terminalach poleceniem:</br>
+      ./reversi B lub ./reversi C do skutku.</br>
+      Jeśli nie zadziała B to uruchamiamy z C, a drugi z innym parametrem.</br>
   4.2 **Windows**</br>
       Na Windowsie postępujemy analogicznie, lecz kompilujemy z plikiem pipes-win.c
   
