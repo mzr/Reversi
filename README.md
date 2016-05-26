@@ -35,7 +35,7 @@ a simple game written in C with GTK+
       </br>
       Uruchamiamy w 2 osobnych terminalach poleceniem:</br>
       ./reversi B lub ./reversi C do skutku.</br>
-      Jeśli nie zadziała B to uruchamiamy z C, a drugi z innym parametrem.</br>
+      Jeśli nie zadziała B to uruchamiamy z C, a drugi z innym parametrem.</br></br>
   4.2 **Windows**</br>
       Na Windowsie postępujemy analogicznie, lecz kompilujemy z plikiem pipes-win.c
   
