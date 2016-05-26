@@ -25,6 +25,14 @@ a simple game written in C with GTK+
 - Moduł gry - zarządza całym przebiegiem gry i wszystkimi akcjami z nią związanymi, oraz czatem.
 - Moduł  komunikacyjny - odpowiada za komunikację międzyprocesową.
 
-3. **Uruchamianie  / kompilacja:**
-  Na linuxie kompilować z plikiem pipes-lin.c a na windowsie z plikiem pipes-win.c
-  Wymagana jest biblioteka GTK
+4. **Uruchamianie  / kompilacja:**
+  4.1 **Linux**
+      Do kompilacji wymagana biblioteka GTK+-3.0
+      Jej instalacja:
+      sudo apt-get install libgtk-3-dev
+      Program kompilujemy następnie polecieniem:
+      gcc main.c reversi.c pipes-lin.c -std=c99 `pkg-config --cflags --libs gtk+-3.0`
+  4.2 **Windows**
+      Na Windowsie postępujemy analogicznie, lecz kompilujemy z plikiem pipes-win.c
+  
+  
