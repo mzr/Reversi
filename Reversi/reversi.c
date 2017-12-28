@@ -563,10 +563,6 @@ int czy_zmiana(char *id){
     if(ruch_gracza%2==0){     //jesli ruch wykonal bialy
         int xp,yp;
 
-
-
-
-       
         for(int xi=-1; xi<=1; xi++){
             for(int yi=-1; yi<=1; yi++){
                 if(xi == 0 && yi == 0)
@@ -582,76 +578,9 @@ int czy_zmiana(char *id){
             }
         }
         
-
-/*
-        //na lewo
-        xp=x-1;
-        while(xp>=1 && przycisk[xp][y]->stan==czarny) 
-            xp--;
-        if(xp>=1 && xp<x-1 && przycisk[xp][y]->stan==bialy) return 1;
-
-        //na prawo
-        xp=x+1;
-        while(xp<=8 && przycisk[xp][y]->stan==czarny) 
-            xp++;
-        if(xp<=8 && xp>x+1 && przycisk[xp][y]->stan==bialy) return 1;
-
-        //w dol
-        yp=y-1;
-        while(yp>=1 && przycisk[x][yp]->stan==czarny) 
-            yp--;
-        if(yp>=1 && yp<y-1 && przycisk[x][yp]->stan==bialy) return 1;
-
-        //w gore
-        yp=y+1;
-        while(yp<=8 && przycisk[x][yp]->stan==czarny) 
-            yp++;
-        if(yp<=8 && yp>y+1 && przycisk[x][yp]->stan==bialy) return 1;
-
-        //lewo gora
-        xp=x-1,yp=y+1;
-        while(yp<=8 && xp>=1 && przycisk[xp][yp]->stan==czarny){
-            yp++;
-            xp--;
-        }
-        if(yp<=8 && xp>=1 && xp<x-1 && przycisk[xp][yp]->stan==bialy) return 1;
-
-        //prawo gora
-        xp=x+1,yp=y+1;
-        while(yp<=8 && xp<=8 && przycisk[xp][yp]->stan==czarny){
-            yp++;
-            xp++;
-        }
-        if(yp<=8 && xp<=8 && xp>x+1 && przycisk[xp][yp]->stan==bialy) return 1;
-
-        //prawo dol
-        xp=x+1,yp=y-1;
-        while(yp>=1 && xp<=8 && przycisk[xp][yp]->stan==czarny){
-            yp--;
-            xp++;
-        }
-        if(yp>=1 && xp<=8 && xp>x+1 && przycisk[xp][yp]->stan==bialy) return 1;
-
-        //lewo dol
-        xp=x-1,yp=y-1;
-        while(yp>=1 && xp>=1 && przycisk[xp][yp]->stan==czarny){
-            yp--;
-            xp--;
-        }
-        if(yp>=1 && xp>=1 && xp<x-1 && przycisk[xp][yp]->stan==bialy) return 1;
-
-*/
-
-
     }
     if(ruch_gracza%2==1){
         int xp,yp;
-
-
-
-
-
-
 
         for(int xi=-1; xi<=1; xi++){
             for(int yi=-1; yi<=1; yi++){
@@ -667,71 +596,6 @@ int czy_zmiana(char *id){
                     return 1;
             }
         }
-
-
-
-
-
-
-
-/*
-        //na lewo
-        xp=x-1;
-        while(xp>=1 && przycisk[xp][y]->stan==bialy)
-            xp--;
-        if(xp>=1 && xp<x-1 && przycisk[xp][y]->stan==czarny) return 1;
-
-        //na prawo
-        xp=x+1;
-        while(xp<=8 && przycisk[xp][y]->stan==bialy)
-            xp++;
-        if(xp<=8 && xp>x+1 && przycisk[xp][y]->stan==czarny) return 1;
-
-        //w dol
-        yp=y-1;
-        while(yp>=1 && przycisk[x][yp]->stan==bialy)
-            yp--;
-        if(yp>=1 && yp<y-1 && przycisk[x][yp]->stan==czarny) return 1;
-
-        //w gore
-        yp=y+1;
-        while(yp<=8 && przycisk[x][yp]->stan==bialy)
-            yp++;
-        if(yp<=8 && yp>y+1 && przycisk[x][yp]->stan==czarny) return 1;
-
-        //lewo gora
-        xp=x-1,yp=y+1;
-        while(yp<=8 && xp>=1 && przycisk[xp][yp]->stan==bialy){
-            yp++;
-            xp--;
-        }
-        if(yp<=8 && xp>=1 && xp<x-1 && przycisk[xp][yp]->stan==czarny) return 1;
-
-        //prawo gora
-        xp=x+1,yp=y+1;
-        while(yp<=8 && xp<=8 && przycisk[xp][yp]->stan==bialy){
-            yp++;
-            xp++;
-        }
-        if(yp<=8 && xp<=8 && xp>x+1 && przycisk[xp][yp]->stan==czarny) return 1;
-
-        //prawo dol
-        xp=x+1,yp=y-1;
-        while(yp>=1 && xp<=8 && przycisk[xp][yp]->stan==bialy){
-            yp--;
-            xp++;
-        }
-        if(yp>=1 && xp<=8 && xp>x+1 && przycisk[xp][yp]->stan==czarny) return 1;
-
-        //lewo dol
-        xp=x-1,yp=y-1;
-        while(yp>=1 && xp>=1 && przycisk[xp][yp]->stan==bialy){
-            yp--;
-            xp--;
-        }
-        if(yp>=1 && xp>=1 && xp<x-1 && przycisk[xp][yp]->stan==czarny) return 1;
-
-*/
 
     }
     return 0;
