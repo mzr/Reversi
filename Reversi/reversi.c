@@ -6,32 +6,13 @@
 
 #define MAKS_DL_TEKSTU 1000
 
+int not_out_of_bounds(int x, int y);
+int condition(int xp, int yp, int x, int y, int xi, int yi);
+int condition2(int xp, int yp, int x, int y, int xi, int yi);
+
 int not_out_of_bounds(int x, int y)
 {
 	return x >= 1 && x <= 8 && y >= 1 && y <= 8;
-}
-
-int condition(int xp, int yp, int x, int y, int xi, int yi)
-{
-    int cond = 1;
-    if(xi == -1) cond &= xp < x;
-    if(xi == 1)  cond &= xp > x;
-    if(yi == -1) cond &= yp < y;
-    if(yi == 1)  cond &= yp > y;
-
-    return cond;
-}
-
-int condition2(int xp, int yp, int x, int y, int xi, int yi)
-{
-    if(xi == -1 && yi == 0)  return xp >= 1 && xp < x + xi;
-    if(xi == 1  && yi == 0)  return xp <= 8 && xp > x + xi;
-    if(xi == 0  && yi == -1) return yp >= 1 && yp < y + yi;
-    if(xi == 0  && yi == 1)  return yp <= 8 && yp > y + yi;
-    if(xi == -1 && yi == 1)  return yp <= 8 && xp >= 1 && xp < x + xi;
-    if(xi == 1  && yi == 1)  return yp <= 8 && xp <= 8 && xp > x + xi;
-    if(xi == 1  && yi == -1) return yp >= 1 && xp <= 8 && xp < x + xi;
-    if(xi == -1 && yi == -1) return yp >= 1 && xp >= 1 && xp < x + xi;
 }
 
 void przekaz_tekst( GtkWidget *widget,GtkWidget *text){
@@ -73,10 +54,6 @@ void pobierz_tekst(char *data)
     gtk_text_buffer_insert_at_cursor (GTK_TEXT_BUFFER(buffor),wejscie,-1);
 
 }
-
-
-
-
 
 void quit(char *data){
     send_signal("@EX");
@@ -490,41 +467,38 @@ int zmien_plansze(char *id, int ruch_gracza){
     y=id[1]-'1'+1;
     printf("Nacisnieto: %s, pozycje: %d, %d | ruch gracza: %d\n",id,x,y,ruch_gracza);
 
+    gchar* nazwa_pliku[2] = { "bialy.jpg", "czarny.jpg" };
 
-    if(ruch_gracza % 2 == 0){
-        przycisk[x][y]->stan = bialy;
-        gtk_image_set_from_file(przycisk[x][y]->obrazek,"bialy.jpg");
-    } else {
+    if(ruch_gracza % 2 == 1)
         numer_tury++;
-        przycisk[x][y]->stan=czarny;
-        gtk_image_set_from_file(przycisk[x][y]->obrazek,"czarny.jpg");
-    }
+
+    przycisk[x][y]->stan= ruch_gracza % 2;
+    gtk_image_set_from_file(przycisk[x][y]->obrazek,nazwa_pliku[ruch_gracza % 2]);
     
-        gchar* nazwa_pliku[2] = { "bialy.jpg", "czarny.jpg" };
-        int xp,yp;
-        for(int xi=-1; xi <= 1; xi++){
-	        for(int yi=-1; yi <= 1; yi++){
-		        if(xi == 0 && yi == 0)
-			        continue;
-		        // [xi, yi] vector
-    		    xp = x + xi;
-	    	    yp = y + yi;
-		        while(not_out_of_bounds(xp,yp) && przycisk[xp][yp]->stan==((ruch_gracza % 2)+1)%2 ){
-			        xp += xi;
-    			    yp += yi;
-	    	    }
-		        if(not_out_of_bounds(xp,yp) && przycisk[xp][yp]->stan==(ruch_gracza%2)){
+    int xp,yp;
+    for(int xi=-1; xi <= 1; xi++){
+	    for(int yi=-1; yi <= 1; yi++){
+		    if(xi == 0 && yi == 0)
+		        continue;
+	        // [xi, yi] vector
+		    xp = x + xi;
+	    	yp = y + yi;
+		    while(not_out_of_bounds(xp,yp) && przycisk[xp][yp]->stan==((ruch_gracza % 2)+1)%2 ){
+		        xp += xi;
+			    yp += yi;
+	    	}
+		    if(not_out_of_bounds(xp,yp) && przycisk[xp][yp]->stan==(ruch_gracza%2)){
+		        xp -= xi;
+		        yp -= yi;
+			    while(condition(xp,yp,x,y,xi,yi)){
+				    przycisk[xp][yp]->stan=ruch_gracza % 2;
+				    gtk_image_set_from_file(przycisk[xp][yp]->obrazek, nazwa_pliku[ruch_gracza % 2]);
 			        xp -= xi;
 			        yp -= yi;
-			        while(condition(xp,yp,x,y,xi,yi)){
-				        przycisk[xp][yp]->stan=ruch_gracza % 2;
-				        gtk_image_set_from_file(przycisk[xp][yp]->obrazek, nazwa_pliku[ruch_gracza % 2]);
-				        xp -= xi;
-				        yp -= yi;
-			        }
-    		    }
-	        }
-        }
+		        }
+		    }
+	    }
+    }
 
     dump_state();
 }
@@ -552,4 +526,27 @@ int czy_zmiana(char *id){
     }
         
     return 0;
+}
+
+int condition(int xp, int yp, int x, int y, int xi, int yi)
+{
+    int cond = 1;
+    if(xi == -1) cond &= xp < x;
+    if(xi == 1)  cond &= xp > x;
+    if(yi == -1) cond &= yp < y;
+    if(yi == 1)  cond &= yp > y;
+
+    return cond;
+}
+
+int condition2(int xp, int yp, int x, int y, int xi, int yi)
+{
+    if(xi == -1 && yi == 0)  return xp >= 1 && xp < x + xi;
+    if(xi == 1  && yi == 0)  return xp <= 8 && xp > x + xi;
+    if(xi == 0  && yi == -1) return yp >= 1 && yp < y + yi;
+    if(xi == 0  && yi == 1)  return yp <= 8 && yp > y + yi;
+    if(xi == -1 && yi == 1)  return yp <= 8 && xp >= 1 && xp < x + xi;
+    if(xi == 1  && yi == 1)  return yp <= 8 && xp <= 8 && xp > x + xi;
+    if(xi == 1  && yi == -1) return yp >= 1 && xp <= 8 && xp < x + xi;
+    if(xi == -1 && yi == -1) return yp >= 1 && xp >= 1 && xp < x + xi;
 }
