@@ -489,12 +489,53 @@ int zmien_plansze(char *id, int ruch_gracza){
     x=id[0]-'a'+1;
     y=id[1]-'1'+1;
     printf("Nacisnieto: %s, pozycje: %d, %d | ruch gracza: %d\n",id,x,y,ruch_gracza);
+
+
+    if(ruch_gracza % 2 == 0){
+        przycisk[x][y]->stan = bialy;
+        gtk_image_set_from_file(przycisk[x][y]->obrazek,"bialy.jpg");
+    } else {
+        numer_tury++;
+        przycisk[x][y]->stan=czarny;
+        gtk_image_set_from_file(przycisk[x][y]->obrazek,"czarny.jpg");
+    }
+    
+        gchar* nazwa_pliku[2] = { "bialy.jpg", "czarny.jpg" };
+        int xp,yp;
+        for(int xi=-1; xi <= 1; xi++){
+	        for(int yi=-1; yi <= 1; yi++){
+		        if(xi == 0 && yi == 0)
+			        continue;
+		        // [xi, yi] vector
+    		    xp = x + xi;
+	    	    yp = y + yi;
+		        while(not_out_of_bounds(xp,yp) && przycisk[xp][yp]->stan==((ruch_gracza % 2)+1)%2 ){
+			        xp += xi;
+    			    yp += yi;
+	    	    }
+		        if(not_out_of_bounds(xp,yp) && przycisk[xp][yp]->stan==(ruch_gracza%2)){
+			        xp -= xi;
+			        yp -= yi;
+			        while(condition(xp,yp,x,y,xi,yi)){
+				        przycisk[xp][yp]->stan=ruch_gracza % 2;
+				        gtk_image_set_from_file(przycisk[xp][yp]->obrazek, nazwa_pliku[ruch_gracza % 2]);
+				        xp -= xi;
+				        yp -= yi;
+			        }
+    		    }
+	        }
+        }
+
+
+
+
+
+/*
     if(ruch_gracza%2==0){     //jesli ruch wykonal bialy
         przycisk[x][y]->stan=bialy;
         gtk_image_set_from_file(przycisk[x][y]->obrazek,"bialy.jpg");
 
         int xp,yp;
-
         for(int xi=-1; xi <= 1; xi++){
 	        for(int yi=-1; yi <= 1; yi++){
 		        if(xi == 0 && yi == 0)
@@ -526,7 +567,6 @@ int zmien_plansze(char *id, int ruch_gracza){
         gtk_image_set_from_file(przycisk[x][y]->obrazek,"czarny.jpg");
 
         int xp,yp;
-
         for(int xi=-1; xi <= 1; xi++){
 	        for(int yi=-1; yi <= 1; yi++){
 		        if(xi == 0 && yi == 0)
@@ -552,6 +592,10 @@ int zmien_plansze(char *id, int ruch_gracza){
         }
 
     }
+*/
+
+
+
     dump_state();
 }
 
