@@ -560,7 +560,7 @@ int czy_zmiana(char *id){
     x=id[0]-'a'+1;
     y=id[1]-'1'+1;
 
-    if(ruch_gracza%2==0){     //jesli ruch wykonal bialy
+
         int xp,yp;
 
         for(int xi=-1; xi<=1; xi++){
@@ -569,34 +569,57 @@ int czy_zmiana(char *id){
                     continue;
                 xp = x + xi;
                 yp = y + yi;
-                while(not_out_of_bounds(xp,yp) && przycisk[xp][yp]->stan==czarny){
+                while(not_out_of_bounds(xp,yp) && przycisk[xp][yp]->stan==((ruch_gracza%2)+1)%2){
                     xp += xi;
                     yp += yi;
                 }
-                if(condition2(xp,yp,x,y,xi,yi) && przycisk[xp][yp]->stan==bialy)
-                    return 1;
-            }
-        }
-        
-    }
-    if(ruch_gracza%2==1){
-        int xp,yp;
-
-        for(int xi=-1; xi<=1; xi++){
-            for(int yi=-1; yi<=1; yi++){
-                if(xi == 0 && yi == 0)
-                    continue;
-                xp = x + xi;
-                yp = y + yi;
-                while(not_out_of_bounds(xp,yp) && przycisk[xp][yp]->stan==bialy){
-                    xp += xi;
-                    yp += yi;
-                }
-                if(condition2(xp,yp,x,y,xi,yi) && przycisk[xp][yp]->stan==czarny)
+                if(condition2(xp,yp,x,y,xi,yi) && przycisk[xp][yp]->stan==(ruch_gracza%2))
                     return 1;
             }
         }
 
-    }
+
+
+
+
+
+    // if(ruch_gracza%2==0){     //jesli ruch wykonal bialy
+    //     int xp,yp;
+
+    //     for(int xi=-1; xi<=1; xi++){
+    //         for(int yi=-1; yi<=1; yi++){
+    //             if(xi == 0 && yi == 0)
+    //                 continue;
+    //             xp = x + xi;
+    //             yp = y + yi;
+    //             while(not_out_of_bounds(xp,yp) && przycisk[xp][yp]->stan==czarny){
+    //                 xp += xi;
+    //                 yp += yi;
+    //             }
+    //             if(condition2(xp,yp,x,y,xi,yi) && przycisk[xp][yp]->stan==bialy)
+    //                 return 1;
+    //         }
+    //     }  
+    // }
+    // if(ruch_gracza%2==1){
+    //     int xp,yp;
+
+    //     for(int xi=-1; xi<=1; xi++){
+    //         for(int yi=-1; yi<=1; yi++){
+    //             if(xi == 0 && yi == 0)
+    //                 continue;
+    //             xp = x + xi;
+    //             yp = y + yi;
+    //             while(not_out_of_bounds(xp,yp) && przycisk[xp][yp]->stan==bialy){
+    //                 xp += xi;
+    //                 yp += yi;
+    //             }
+    //             if(condition2(xp,yp,x,y,xi,yi) && przycisk[xp][yp]->stan==czarny)
+    //                 return 1;
+    //         }
+    //     }
+    // }
+
+
     return 0;
 }
