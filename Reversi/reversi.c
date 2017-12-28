@@ -22,6 +22,18 @@ int condition(int xp, int yp, int x, int y, int xi, int yi)
     return cond;
 }
 
+int condition2(int xp, int yp, int x, int y, int xi, int yi)
+{
+    if(xi == -1 && yi == 0)  return xp >= 1 && xp < x + xi;
+    if(xi == 1  && yi == 0)  return xp <= 8 && xp > x + xi;
+    if(xi == 0  && yi == -1) return yp >= 1 && yp < y + yi;
+    if(xi == 0  && yi == 1)  return yp <= 8 && yp > y + yi;
+    if(xi == -1 && yi == 1)  return yp <= 8 && xp >= 1 && xp < x + xi;
+    if(xi == 1  && yi == 1)  return yp <= 8 && xp <= 8 && xp > x + xi;
+    if(xi == 1  && yi == -1) return yp >= 1 && xp <= 8 && xp < x + xi;
+    if(xi == -1 && yi == -1) return yp >= 1 && xp >= 1 && xp < x + xi;
+}
+
 void przekaz_tekst( GtkWidget *widget,GtkWidget *text){
     char moj_id[2];
     moj_id[0]=id;
@@ -554,28 +566,24 @@ int czy_zmiana(char *id){
 
 
 
-        /*
+       
         for(int xi=-1; xi<=1; xi++){
             for(int yi=-1; yi<=1; yi++){
                 if(xi == 0 && yi == 0)
                     continue;
-                xp += xi;
-                yp += yi;
-                while(not_out_of_bounds(xp,yp) && przycisk[x][yp]->stan==czarny){
+                xp = x + xi;
+                yp = y + yi;
+                while(not_out_of_bounds(xp,yp) && przycisk[xp][yp]->stan==czarny){
                     xp += xi;
                     yp += yi;
                 }
-                if(not_out_of_bounds(xp,yp) && przycisk[xp][yp]->stan==bialy)
+                if(condition2(xp,yp,x,y,xi,yi) && przycisk[xp][yp]->stan==bialy)
                     return 1;
             }
         }
+        
 
-        */
-
-
-
-
-
+/*
         //na lewo
         xp=x-1;
         while(xp>=1 && przycisk[xp][y]->stan==czarny) 
@@ -632,6 +640,9 @@ int czy_zmiana(char *id){
         }
         if(yp>=1 && xp>=1 && xp<x-1 && przycisk[xp][yp]->stan==bialy) return 1;
 
+*/
+
+
     }
     if(ruch_gracza%2==1){
         int xp,yp;
@@ -641,29 +652,29 @@ int czy_zmiana(char *id){
 
 
 
-/*
+
         for(int xi=-1; xi<=1; xi++){
             for(int yi=-1; yi<=1; yi++){
                 if(xi == 0 && yi == 0)
                     continue;
-                xp += xi;
-                yp += yi;
-                while(not_out_of_bounds(xp,yp) && przycisk[x][yp]->stan==bialy){
+                xp = x + xi;
+                yp = y + yi;
+                while(not_out_of_bounds(xp,yp) && przycisk[xp][yp]->stan==bialy){
                     xp += xi;
                     yp += yi;
                 }
-                if(not_out_of_bounds(xp,yp) && przycisk[xp][yp]->stan==czarny)
+                if(condition2(xp,yp,x,y,xi,yi) && przycisk[xp][yp]->stan==czarny)
                     return 1;
             }
         }
 
-*/
 
 
 
 
 
 
+/*
         //na lewo
         xp=x-1;
         while(xp>=1 && przycisk[xp][y]->stan==bialy)
@@ -719,6 +730,8 @@ int czy_zmiana(char *id){
             xp--;
         }
         if(yp>=1 && xp>=1 && xp<x-1 && przycisk[xp][yp]->stan==czarny) return 1;
+
+*/
 
     }
     return 0;
