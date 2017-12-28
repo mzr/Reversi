@@ -6,6 +6,11 @@
 
 #define MAKS_DL_TEKSTU 1000
 
+int not_out_of_bounds(int x, int y)
+{
+	return x >= 1 && x <= 8 && y >= 1 && y <= 8;
+}
+
 void przekaz_tekst( GtkWidget *widget,GtkWidget *text){
     char moj_id[2];
     moj_id[0]=id;
@@ -466,6 +471,39 @@ int zmien_plansze(char *id, int ruch_gracza){
         gtk_image_set_from_file(przycisk[x][y]->obrazek,"bialy.jpg");
 
         int xp,yp;
+
+
+
+/*
+        for(int xi=-1; xi <= 1; xi++){
+	        for(int yi=-1; yi <= 1; yi++){
+		        if(xi == 0 && yi == 0)
+			        continue;
+		        // [xi, yi] vector
+    		    xp = x + xi;
+	    	    yp = y + yi;
+		        while(not_out_of_bounds(xp,yp) && przycisk[xp][yp]->stan==czarny){
+			        xp += xi;
+    			    yp += yi;
+	    	    }
+		        if(not_out_of_bounds(xp,yp) && przycisk[xp][yp]->stan==bialy){
+			        xp -= xi;
+			        yp -= yi;
+			        while(yp != y && xp != x){
+				        przycisk[xp][yp]->stan=bialy;
+				        gtk_image_set_from_file(przycisk[xp][yp]->obrazek,"bialy.jpg");
+				        xp -= xi;
+				        yp -= yi;
+			        }
+    		    }
+	        }
+        }
+        */
+
+
+
+
+
         //na lewo
         xp=x-1;
         while(xp>=1 && przycisk[xp][y]->stan==czarny)
@@ -578,6 +616,12 @@ int zmien_plansze(char *id, int ruch_gracza){
                 yp++;
             }
         }
+
+
+
+
+
+
     }
     if(ruch_gracza%2==1){
         numer_tury++;
@@ -585,6 +629,49 @@ int zmien_plansze(char *id, int ruch_gracza){
         gtk_image_set_from_file(przycisk[x][y]->obrazek,"czarny.jpg");
 
         int xp,yp;
+
+
+
+
+
+
+/*
+        for(int xi=-1; xi <= 1; xi++){
+	        for(int yi=-1; yi <= 1; yi++){
+		        if(xi == 0 && yi == 0)
+			        continue;
+		        // [xi, yi] vector
+    		    xp = x + xi;
+	    	    yp = y + yi;
+		        while(not_out_of_bounds(xp,yp) && przycisk[xp][yp]->stan==bialy){
+			        xp += xi;
+    			    yp += yi;
+	    	    }
+		        if(not_out_of_bounds(xp,yp) && przycisk[xp][yp]->stan==czarny){
+			        xp -= xi;
+			        yp -= yi;
+			        while(yp != y && xp != x){
+				        przycisk[xp][yp]->stan=czarny;
+				        gtk_image_set_from_file(przycisk[xp][yp]->obrazek,"czarny.jpg");
+				        xp -= xi;
+				        yp -= yi;
+			        }
+    		    }
+	        }
+        }
+        */
+
+
+
+
+
+
+
+
+
+
+
+
         //na lewo
         xp=x-1;
         while(xp>=1 && przycisk[xp][y]->stan==bialy)
@@ -697,6 +784,11 @@ int zmien_plansze(char *id, int ruch_gracza){
                 yp++;
             }
         }
+
+
+
+
+
     }
     dump_state();
 }
@@ -708,6 +800,31 @@ int czy_zmiana(char *id){
 
     if(ruch_gracza%2==0){     //jesli ruch wykonal bialy
         int xp,yp;
+
+
+
+
+        /*
+        for(int xi=-1; xi<=1; xi++){
+            for(int yi=-1; yi<=1; yi++){
+                if(xi == 0 && yi == 0)
+                    continue;
+                xp += xi;
+                yp += yi;
+                while(not_out_of_bounds(xp,yp) && przycisk[x][yp]->stan==czarny){
+                    xp += xi;
+                    yp += yi;
+                }
+                if(not_out_of_bounds(xp,yp) && przycisk[xp][yp]->stan==bialy)
+                    return 1;
+            }
+        }
+
+        */
+
+
+
+
 
         //na lewo
         xp=x-1;
@@ -764,6 +881,35 @@ int czy_zmiana(char *id){
     }
     if(ruch_gracza%2==1){
         int xp,yp;
+
+
+
+
+
+
+/*
+        for(int xi=-1; xi<=1; xi++){
+            for(int yi=-1; yi<=1; yi++){
+                if(xi == 0 && yi == 0)
+                    continue;
+                xp += xi;
+                yp += yi;
+                while(not_out_of_bounds(xp,yp) && przycisk[x][yp]->stan==bialy){
+                    xp += xi;
+                    yp += yi;
+                }
+                if(not_out_of_bounds(xp,yp) && przycisk[xp][yp]->stan==czarny)
+                    return 1;
+            }
+        }
+
+*/
+
+
+
+
+
+
         //na lewo
         xp=x-1;
         while(xp>=1 && przycisk[xp][y]->stan==bialy) xp--;
