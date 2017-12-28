@@ -11,6 +11,17 @@ int not_out_of_bounds(int x, int y)
 	return x >= 1 && x <= 8 && y >= 1 && y <= 8;
 }
 
+int condition(int xp, int yp, int x, int y, int xi, int yi)
+{
+    int cond = 1;
+    if(xi == -1) cond &= xp < x;
+    if(xi == 1)  cond &= xp > x;
+    if(yi == -1) cond &= yp < y;
+    if(yi == 1)  cond &= yp > y;
+
+    return cond;
+}
+
 void przekaz_tekst( GtkWidget *widget,GtkWidget *text){
     char moj_id[2];
     moj_id[0]=id;
@@ -472,9 +483,6 @@ int zmien_plansze(char *id, int ruch_gracza){
 
         int xp,yp;
 
-
-
-/*
         for(int xi=-1; xi <= 1; xi++){
 	        for(int yi=-1; yi <= 1; yi++){
 		        if(xi == 0 && yi == 0)
@@ -489,7 +497,7 @@ int zmien_plansze(char *id, int ruch_gracza){
 		        if(not_out_of_bounds(xp,yp) && przycisk[xp][yp]->stan==bialy){
 			        xp -= xi;
 			        yp -= yi;
-			        while(yp != y && xp != x){
+			        while(condition(xp,yp,x,y,xi,yi)){
 				        przycisk[xp][yp]->stan=bialy;
 				        gtk_image_set_from_file(przycisk[xp][yp]->obrazek,"bialy.jpg");
 				        xp -= xi;
@@ -498,130 +506,7 @@ int zmien_plansze(char *id, int ruch_gracza){
     		    }
 	        }
         }
-        */
-
-
-
-
-
-        //na lewo
-        xp=x-1;
-        while(xp>=1 && przycisk[xp][y]->stan==czarny)
-            xp--;
-        if(xp>=1 && przycisk[xp][y]->stan==bialy){
-            xp++;
-            while(xp<x){
-                przycisk[xp][y]->stan=bialy;
-                gtk_image_set_from_file(przycisk[xp][y]->obrazek,"bialy.jpg");
-                xp++;
-            }
-        }
-        //na prawo
-        xp=x+1;
-        while(xp<=8 && przycisk[xp][y]->stan==czarny)
-            xp++;
-        if(xp<=8 && przycisk[xp][y]->stan==bialy){
-            xp--;
-            while(xp>x){
-                przycisk[xp][y]->stan=bialy;
-                gtk_image_set_from_file(przycisk[xp][y]->obrazek,"bialy.jpg");
-                xp--;
-            }
-        }
-        //w dol
-        yp=y-1;
-        while(yp>=1 && przycisk[x][yp]->stan==czarny)
-            yp--;
-        if(yp>=1 && przycisk[x][yp]->stan==bialy){
-            yp++;
-            while(yp<y){
-                przycisk[x][yp]->stan=bialy;
-                gtk_image_set_from_file(przycisk[x][yp]->obrazek,"bialy.jpg");
-                yp++;
-            }
-        }
-        //w gore
-        yp=y+1;
-        while(yp<=8 && przycisk[x][yp]->stan==czarny)
-            yp++;
-        if(yp<=8 && przycisk[x][yp]->stan==bialy){
-            yp--;
-            while(yp>y){
-                przycisk[x][yp]->stan=bialy;
-                gtk_image_set_from_file(przycisk[x][yp]->obrazek,"bialy.jpg");
-                yp--;
-            }
-        }
-        //lewo gora
-        xp=x-1,yp=y+1;
-        while(yp<=8 && xp>=1 && przycisk[xp][yp]->stan==czarny){
-            yp++;
-            xp--;
-        }
-        if(yp<=8 && xp>=1 && przycisk[xp][yp]->stan==bialy){
-            xp++;
-            yp--;
-            while(yp>y){
-                przycisk[xp][yp]->stan=bialy;
-                gtk_image_set_from_file(przycisk[xp][yp]->obrazek,"bialy.jpg");
-                xp++;
-                yp--;
-            }
-        }
-        //prawo gora
-        xp=x+1,yp=y+1;
-        while(yp<=8 && xp<=8 && przycisk[xp][yp]->stan==czarny){
-            yp++;
-            xp++;
-        }
-        if(yp<=8 && xp<=8 && przycisk[xp][yp]->stan==bialy){
-            xp--;
-            yp--;
-            while(yp>y){
-                przycisk[xp][yp]->stan=bialy;
-                gtk_image_set_from_file(przycisk[xp][yp]->obrazek,"bialy.jpg");
-                xp--;
-                yp--;
-            }
-        }
-        //prawo dol
-        xp=x+1,yp=y-1;
-        while(yp>=1 && xp<=8 && przycisk[xp][yp]->stan==czarny){
-            yp--;
-            xp++;
-        }
-        if(yp>=1 && xp<=8 && przycisk[xp][yp]->stan==bialy){
-            xp--;
-            yp++;
-            while(yp<y){
-                przycisk[xp][yp]->stan=bialy;
-                gtk_image_set_from_file(przycisk[xp][yp]->obrazek,"bialy.jpg");
-                xp--;
-                yp++;
-            }
-        }
-        //lewo dol
-        xp=x-1,yp=y-1;
-        while(yp>=1 && xp>=1 && przycisk[xp][yp]->stan==czarny){
-            yp--;
-            xp--;
-        }
-        if(yp>=1 && xp>=1 && przycisk[xp][yp]->stan==bialy){
-            xp++;
-            yp++;
-            while(yp<y){
-                przycisk[xp][yp]->stan=bialy;
-                gtk_image_set_from_file(przycisk[xp][yp]->obrazek,"bialy.jpg");
-                xp++;
-                yp++;
-            }
-        }
-
-
-
-
-
-
+        
     }
     if(ruch_gracza%2==1){
         numer_tury++;
@@ -630,12 +515,6 @@ int zmien_plansze(char *id, int ruch_gracza){
 
         int xp,yp;
 
-
-
-
-
-
-/*
         for(int xi=-1; xi <= 1; xi++){
 	        for(int yi=-1; yi <= 1; yi++){
 		        if(xi == 0 && yi == 0)
@@ -650,7 +529,7 @@ int zmien_plansze(char *id, int ruch_gracza){
 		        if(not_out_of_bounds(xp,yp) && przycisk[xp][yp]->stan==czarny){
 			        xp -= xi;
 			        yp -= yi;
-			        while(yp != y && xp != x){
+			        while(condition(xp,yp,x,y,xi,yi)){
 				        przycisk[xp][yp]->stan=czarny;
 				        gtk_image_set_from_file(przycisk[xp][yp]->obrazek,"czarny.jpg");
 				        xp -= xi;
@@ -659,135 +538,6 @@ int zmien_plansze(char *id, int ruch_gracza){
     		    }
 	        }
         }
-        */
-
-
-
-
-
-
-
-
-
-
-
-
-        //na lewo
-        xp=x-1;
-        while(xp>=1 && przycisk[xp][y]->stan==bialy)
-            xp--;
-        if(xp>=1 && przycisk[xp][y]->stan==czarny){
-            xp++;
-            while(xp<x){
-                przycisk[xp][y]->stan=czarny;
-                gtk_image_set_from_file(przycisk[xp][y]->obrazek,"czarny.jpg");
-                xp++;
-            }
-        }
-        //na prawo
-        xp=x+1;
-        while(xp<=8 && przycisk[xp][y]->stan==bialy)
-            xp++;
-        if(xp<=8 && przycisk[xp][y]->stan==czarny){
-            xp--;
-            while(xp>x){
-                przycisk[xp][y]->stan=czarny;
-                gtk_image_set_from_file(przycisk[xp][y]->obrazek,"czarny.jpg");;
-                xp--;
-            }
-        }
-        //w dol
-        yp=y-1;
-        while(yp>=1 && przycisk[x][yp]->stan==bialy)
-            yp--;
-        if(yp>=1 && przycisk[x][yp]->stan==czarny){
-            yp++;
-            while(yp<y){
-                przycisk[x][yp]->stan=czarny;
-                gtk_image_set_from_file(przycisk[x][yp]->obrazek,"czarny.jpg");
-                yp++;
-            }
-        }
-        //w gore
-        yp=y+1;
-        while(yp<=8 && przycisk[x][yp]->stan==bialy)
-            yp++;
-        if(yp<=8 && przycisk[x][yp]->stan==czarny){
-            yp--;
-            while(yp>y){
-                przycisk[x][yp]->stan=czarny;
-                gtk_image_set_from_file(przycisk[x][yp]->obrazek,"czarny.jpg");
-                yp--;
-            }
-        }
-        //lewo gora
-        xp=x-1,yp=y+1;
-        while(yp<=8 && xp>=1 && przycisk[xp][yp]->stan==bialy){
-            yp++;
-            xp--;
-        }
-        if(yp<=8 && xp>=1 && przycisk[xp][yp]->stan==czarny){
-            xp++;
-            yp--;
-            while(yp>y){
-                przycisk[xp][yp]->stan=czarny;
-                gtk_image_set_from_file(przycisk[xp][yp]->obrazek,"czarny.jpg");
-                xp++;
-                yp--;
-            }
-        }
-        //prawo gora
-        xp=x+1,yp=y+1;
-        while(yp<=8 && xp<=8 && przycisk[xp][yp]->stan==bialy){
-            yp++;
-            xp++;
-        }
-        if(yp<=8 && xp<=8 && przycisk[xp][yp]->stan==czarny){
-            xp--;
-            yp--;
-            while(yp>y){
-                przycisk[xp][yp]->stan=czarny;
-                gtk_image_set_from_file(przycisk[xp][yp]->obrazek,"czarny.jpg");;
-                xp--;
-                yp--;
-            }
-        }
-        //prawo dol
-        xp=x+1,yp=y-1;
-        while(yp>=1 && xp<=8 && przycisk[xp][yp]->stan==bialy){
-            yp--;
-            xp++;
-        }
-        if(yp>=1 && xp<=8 && przycisk[xp][yp]->stan==czarny){
-            xp--;
-            yp++;
-            while(yp<y){
-                przycisk[xp][yp]->stan=czarny;
-                gtk_image_set_from_file(przycisk[xp][yp]->obrazek,"czarny.jpg");
-                xp--;
-                yp++;
-            }
-        }
-        //lewo dol
-        xp=x-1,yp=y-1;
-        while(yp>=1 && xp>=1 && przycisk[xp][yp]->stan==bialy){
-            yp--;
-            xp--;
-        }
-        if(yp>=1 && xp>=1 && przycisk[xp][yp]->stan==czarny){
-            xp++;
-            yp++;
-            while(yp<y){
-                przycisk[xp][yp]->stan=czarny;
-                gtk_image_set_from_file(przycisk[xp][yp]->obrazek,"czarny.jpg");
-                xp++;
-                yp++;
-            }
-        }
-
-
-
-
 
     }
     dump_state();
@@ -828,23 +578,27 @@ int czy_zmiana(char *id){
 
         //na lewo
         xp=x-1;
-        while(xp>=1 && przycisk[xp][y]->stan==czarny) xp--;
-        if(xp>=1 && przycisk[xp][y]->stan==bialy && xp<x-1) return 1;
+        while(xp>=1 && przycisk[xp][y]->stan==czarny) 
+            xp--;
+        if(xp>=1 && xp<x-1 && przycisk[xp][y]->stan==bialy) return 1;
 
         //na prawo
         xp=x+1;
-        while(xp<=8 && przycisk[xp][y]->stan==czarny) xp++;
-        if(xp<=8 && przycisk[xp][y]->stan==bialy && xp>x+1) return 1;
+        while(xp<=8 && przycisk[xp][y]->stan==czarny) 
+            xp++;
+        if(xp<=8 && xp>x+1 && przycisk[xp][y]->stan==bialy) return 1;
 
         //w dol
         yp=y-1;
-        while(yp>=1 && przycisk[x][yp]->stan==czarny) yp--;
-        if(yp>=1 && przycisk[x][yp]->stan==bialy && yp<y-1) return 1;
+        while(yp>=1 && przycisk[x][yp]->stan==czarny) 
+            yp--;
+        if(yp>=1 && yp<y-1 && przycisk[x][yp]->stan==bialy) return 1;
 
         //w gore
         yp=y+1;
-        while(yp<=8 && przycisk[x][yp]->stan==czarny) yp++;
-        if(yp<=8 && przycisk[x][yp]->stan==bialy && yp>y+1) return 1;
+        while(yp<=8 && przycisk[x][yp]->stan==czarny) 
+            yp++;
+        if(yp<=8 && yp>y+1 && przycisk[x][yp]->stan==bialy) return 1;
 
         //lewo gora
         xp=x-1,yp=y+1;
@@ -852,7 +606,7 @@ int czy_zmiana(char *id){
             yp++;
             xp--;
         }
-        if(yp<=8 && xp>=1 && przycisk[xp][yp]->stan==bialy && xp<x-1) return 1;
+        if(yp<=8 && xp>=1 && xp<x-1 && przycisk[xp][yp]->stan==bialy) return 1;
 
         //prawo gora
         xp=x+1,yp=y+1;
@@ -860,7 +614,7 @@ int czy_zmiana(char *id){
             yp++;
             xp++;
         }
-        if(yp<=8 && xp<=8 && przycisk[xp][yp]->stan==bialy && xp>x+1) return 1;
+        if(yp<=8 && xp<=8 && xp>x+1 && przycisk[xp][yp]->stan==bialy) return 1;
 
         //prawo dol
         xp=x+1,yp=y-1;
@@ -868,7 +622,7 @@ int czy_zmiana(char *id){
             yp--;
             xp++;
         }
-        if(yp>=1 && xp<=8 && przycisk[xp][yp]->stan==bialy && xp>x+1) return 1;
+        if(yp>=1 && xp<=8 && xp>x+1 && przycisk[xp][yp]->stan==bialy) return 1;
 
         //lewo dol
         xp=x-1,yp=y-1;
@@ -876,7 +630,7 @@ int czy_zmiana(char *id){
             yp--;
             xp--;
         }
-        if(yp>=1 && xp>=1 && przycisk[xp][yp]->stan==bialy && xp<x-1) return 1;
+        if(yp>=1 && xp>=1 && xp<x-1 && przycisk[xp][yp]->stan==bialy) return 1;
 
     }
     if(ruch_gracza%2==1){
@@ -912,23 +666,27 @@ int czy_zmiana(char *id){
 
         //na lewo
         xp=x-1;
-        while(xp>=1 && przycisk[xp][y]->stan==bialy) xp--;
-        if(xp>=1 && przycisk[xp][y]->stan==czarny && xp<x-1) return 1;
+        while(xp>=1 && przycisk[xp][y]->stan==bialy)
+            xp--;
+        if(xp>=1 && xp<x-1 && przycisk[xp][y]->stan==czarny) return 1;
 
         //na prawo
         xp=x+1;
-        while(xp<=8 && przycisk[xp][y]->stan==bialy) xp++;
-        if(xp<=8 && przycisk[xp][y]->stan==czarny && xp>x+1) return 1;
+        while(xp<=8 && przycisk[xp][y]->stan==bialy)
+            xp++;
+        if(xp<=8 && xp>x+1 && przycisk[xp][y]->stan==czarny) return 1;
 
         //w dol
         yp=y-1;
-        while(yp>=1 && przycisk[x][yp]->stan==bialy) yp--;
-        if(yp>=1 && przycisk[x][yp]->stan==czarny && yp<y-1) return 1;
+        while(yp>=1 && przycisk[x][yp]->stan==bialy)
+            yp--;
+        if(yp>=1 && yp<y-1 && przycisk[x][yp]->stan==czarny) return 1;
 
         //w gore
         yp=y+1;
-        while(yp<=8 && przycisk[x][yp]->stan==bialy) yp++;
-        if(yp<=8 && przycisk[x][yp]->stan==czarny && yp>y+1) return 1;
+        while(yp<=8 && przycisk[x][yp]->stan==bialy)
+            yp++;
+        if(yp<=8 && yp>y+1 && przycisk[x][yp]->stan==czarny) return 1;
 
         //lewo gora
         xp=x-1,yp=y+1;
@@ -936,7 +694,7 @@ int czy_zmiana(char *id){
             yp++;
             xp--;
         }
-        if(yp<=8 && xp>=1 && przycisk[xp][yp]->stan==czarny && xp<x-1) return 1;
+        if(yp<=8 && xp>=1 && xp<x-1 && przycisk[xp][yp]->stan==czarny) return 1;
 
         //prawo gora
         xp=x+1,yp=y+1;
@@ -944,7 +702,7 @@ int czy_zmiana(char *id){
             yp++;
             xp++;
         }
-        if(yp<=8 && xp<=8 && przycisk[xp][yp]->stan==czarny && xp>x+1) return 1;
+        if(yp<=8 && xp<=8 && xp>x+1 && przycisk[xp][yp]->stan==czarny) return 1;
 
         //prawo dol
         xp=x+1,yp=y-1;
@@ -952,7 +710,7 @@ int czy_zmiana(char *id){
             yp--;
             xp++;
         }
-        if(yp>=1 && xp<=8 && przycisk[xp][yp]->stan==czarny && xp>x+1) return 1;
+        if(yp>=1 && xp<=8 && xp>x+1 && przycisk[xp][yp]->stan==czarny) return 1;
 
         //lewo dol
         xp=x-1,yp=y-1;
@@ -960,7 +718,7 @@ int czy_zmiana(char *id){
             yp--;
             xp--;
         }
-        if(yp>=1 && xp>=1 && przycisk[xp][yp]->stan==czarny && xp<x-1) return 1;
+        if(yp>=1 && xp>=1 && xp<x-1 && przycisk[xp][yp]->stan==czarny) return 1;
 
     }
     return 0;
